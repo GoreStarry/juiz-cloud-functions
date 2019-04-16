@@ -7,8 +7,8 @@ const postUnitedStatesNewHomeSales = require("./slack/postUnitedStatesNewHomeSal
  * @param {!Object} context Metadata for the event.
  */
 exports.handleCloudFunctionsRequest = async (event, context) => {
-  const pubsubMessage = event.data;
-  console.log(Buffer.from(pubsubMessage, "base64").toString());
+  const pubsubMessage = Buffer.from(event.data, "base64").toString();
+  console.log(pubsubMessage);
 
   switch (pubsubMessage) {
     case "UnitedStatesNewHomeSales":
