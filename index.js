@@ -6,7 +6,7 @@ const postUnitedStatesNewHomeSales = require("./slack/postUnitedStatesNewHomeSal
  * @param {!Object} event Event payload.
  * @param {!Object} context Metadata for the event.
  */
-exports.handleCloudFunctions = async (event, context) => {
+exports.handleCloudFunctionsRequest = async (event, context) => {
   const pubsubMessage = event.data;
   console.log(Buffer.from(pubsubMessage, "base64").toString());
 
