@@ -6,18 +6,8 @@ const { SLACK_TOKEN, CONVERSATION_ID } = process.env;
 
 const web = new WebClient(SLACK_TOKEN);
 
-/**
- * Triggered from a message on a Cloud Pub/Sub topic.
- *
- * @param {!Object} event Event payload.
- * @param {!Object} context Metadata for the event.
- */
-exports.postUnitedStatesNewHomeSales = async (event, context) => {
-  const pubsubMessage = event.data;
-  console.log(Buffer.from(pubsubMessage, "base64").toString());
-
-  const today = new Date();
-
+(async () => {
+  // See: https://api.slack.com/methods/chat.postMessage
   const res = await web.chat
     .postMessage({
       channel: CONVERSATION_ID,
@@ -31,13 +21,14 @@ exports.postUnitedStatesNewHomeSales = async (event, context) => {
           },
           image_url:
             "https://d3fy651gv2fhd3.cloudfront.net/charts/united-states-new-home-sales.png?s=unitedstanewhomsal",
-          alt_text: `${today.getFullYear()}/${today.getMonth() +
-            1} united states new home sales`,
+          alt_text: "image1",
         },
       ],
     })
     .catch(err => {
       console.log(err);
     });
+
+  // `res` contains information about the posted message
   console.log("Message sent: ", res.ts);
-};
+})();
