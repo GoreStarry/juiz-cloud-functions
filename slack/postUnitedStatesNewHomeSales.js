@@ -6,7 +6,7 @@ const { SLACK_TOKEN, CONVERSATION_ID } = process.env;
 
 const web = new WebClient(SLACK_TOKEN);
 
-const postUnitedStatesNewHomeSales = async () => {
+exports.postUnitedStatesNewHomeSales = async () => {
   // See: https://api.slack.com/methods/chat.postMessage
   const today = new Date();
   const image_title = `${today.getFullYear()}/${today.getMonth() +
@@ -35,5 +35,3 @@ const postUnitedStatesNewHomeSales = async () => {
   // `res` contains information about the posted message
   console.log("Message sent: ", res.ts);
 };
-
-module.exports = postUnitedStatesNewHomeSales;

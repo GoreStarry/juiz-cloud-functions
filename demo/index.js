@@ -1,3 +1,5 @@
-const postUnitedStatesNewHomeSales = require("../slack/postUnitedStatesNewHomeSales.js");
+const {
+  postUnitedStatesNewHomeSales,
+} = require("../slack/postUnitedStatesNewHomeSales.js");
 
 postUnitedStatesNewHomeSales();

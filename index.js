@@ -1,22 +1,26 @@
-const postUnitedStatesNewHomeSales = require("./slack/postUnitedStatesNewHomeSales.js");
+const {
+  postUnitedStatesNewHomeSales,
+} = require("./slack/postUnitedStatesNewHomeSales.js");
 
 /**
- * Triggered from a message on a Cloud Pub/Sub topic.
+ * Background Cloud Function to be triggered by Pub/Sub.
+ * This function is exported by index.js, and executed when
+ * the trigger topic receives a message.
  *
- * @param {!Object} event Event payload.
- * @param {!Object} context Metadata for the event.
+ * @param {object} data The event payload.
+ * @param {object} context The event metadata.
  */
-exports.handleCloudFunctionsRequest = async (event, context) => {
-  const pubsubMessage = Buffer.from(event.data, "base64").toString();
-  console.log(pubsubMessage);
+exports.handleCloudFunctionsRequest = ({ data }, context) => {
+  const pubSubMessage = data && Buffer.from(data, "base64").toString();
 
-  switch (pubsubMessage) {
+  switch (pubSubMessage) {
     case "UnitedStatesNewHomeSales":
       postUnitedStatesNewHomeSales();
       break;
 
     default:
-      console.log("break");
+      console.log("unknown payload, break");
       break;
   }
+  console.log("done");
 };
