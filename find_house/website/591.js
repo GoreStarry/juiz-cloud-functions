@@ -28,7 +28,7 @@ const extractLinks = ($) => {
   ];
 };
 
-function crawl591(params) {
+module.exports = function crawl591(params) {
   getHtmlPlaywright(url).then((html) => {
     console.log(html);
     const $ = cheerio.load(html); // Initialize cheerio
@@ -36,9 +36,7 @@ function crawl591(params) {
 
     console.log(links);
   });
-}
-
-module.exports = crawl591;
+};
 
 // axios.get(url).then(async ({ data }) => {
 //   const $ = cheerio.load(data); // Initialize cheerio
