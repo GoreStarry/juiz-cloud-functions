@@ -1,11 +1,23 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const playwright = require("playwright");
+// const playwright = require("playwright");
+const { chromium } = require("playwright-core");
+const bundledChromium = require("chrome-aws-lambda");
+
 const url =
   "https://rent.591.com.tw/?kind=1&multiRoom=2,3&section=3,2,5,1,7&searchtype=1&multiPrice=30000_40000,20000_30000&option=naturalgas&showMore=1&multiNotice=not_cover&order=posttime&orderType=desc&area=25,";
 
 const getHtmlPlaywright = async (url) => {
-  const browser = await playwright.chromium.launch();
+  const browser = await Promise.resolve(bundledChromium.executablePath).then(
+    (executablePath) => {
+      if (!executablePath) {
+        // local execution
+        return chromium.launch({});
+      }
+      return chromium.launch({ executablePath });
+    }
+  );
+  // const browser = await playwright.chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
   await page.goto(url);
