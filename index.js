@@ -13,13 +13,14 @@ const houseCrawler = require("./find_house/houseCrawler");
  */
 exports.handleCloudFunctionsRequest = ({ data }, context) => {
   const pubSubMessage = data && Buffer.from(data, "base64").toString();
-
+  console.log(pubSubMessage);
   switch (pubSubMessage) {
     case "UnitedStatesNewHomeSales":
       postUnitedStatesNewHomeSales();
       break;
 
     case "FindHouse":
+      console.log("in FindHouse");
       houseCrawler();
       break;
 
