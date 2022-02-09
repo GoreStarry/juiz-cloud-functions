@@ -2,6 +2,7 @@ const {
   postUnitedStatesNewHomeSales,
 } = require("./slack/postUnitedStatesNewHomeSales.js");
 
+const houseCrawler = require("./find_house/houseCrawler");
 /**
  * Background Cloud Function to be triggered by Pub/Sub.
  * This function is exported by index.js, and executed when
@@ -16,6 +17,10 @@ exports.handleCloudFunctionsRequest = ({ data }, context) => {
   switch (pubSubMessage) {
     case "UnitedStatesNewHomeSales":
       postUnitedStatesNewHomeSales();
+      break;
+
+    case "FindHouse":
+      houseCrawler();
       break;
 
     default:
