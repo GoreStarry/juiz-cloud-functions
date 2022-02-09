@@ -40,8 +40,8 @@ const extractLinks = ($) => {
   ];
 };
 
-module.exports = function crawl591(params) {
-  getHtmlPlaywright(url).then((html) => {
+module.exports = async function crawl591() {
+  await getHtmlPlaywright(url).then((html) => {
     console.log(html);
     const $ = cheerio.load(html); // Initialize cheerio
     const links = extractLinks($);
