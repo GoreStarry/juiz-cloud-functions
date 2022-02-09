@@ -11,7 +11,7 @@ const houseCrawler = require("./find_house/houseCrawler");
  * @param {object} data The event payload.
  * @param {object} context The event metadata.
  */
-exports.handleCloudFunctionsRequest = ({ data }, context) => {
+exports.handleCloudFunctionsRequest = async ({ data }, context) => {
   const pubSubMessage = data && Buffer.from(data, "base64").toString();
   console.log(pubSubMessage);
   switch (pubSubMessage) {
@@ -21,7 +21,7 @@ exports.handleCloudFunctionsRequest = ({ data }, context) => {
 
     case "FindHouse":
       console.log("in FindHouse");
-      houseCrawler();
+      await houseCrawler();
       break;
 
     default:
