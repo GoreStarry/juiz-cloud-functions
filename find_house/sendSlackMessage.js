@@ -32,7 +32,9 @@ module.exports = async function sendSlackMessage(list) {
   var d = new Date();
 
   var datestring =
-    d.toLocaleDateString("zh-tw") + "-" + d.toLocaleTimeString("zh-tw");
+    d.toLocaleDateString("zh-tw", { timeZone: "Asia/Taipei" }) +
+    "-" +
+    d.toLocaleTimeString("zh-tw", { timeZone: "Asia/Taipei" });
 
   return web.chat
     .postMessage({
