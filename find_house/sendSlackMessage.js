@@ -3,7 +3,7 @@ const { WebClient } = require("@slack/web-api");
 console.log("Getting started with Node Slack SDK");
 
 const web = new WebClient(
-  "xoxb-597700362547-3071286135223-e9Z5wHg43CC6nT7vtEJUI7VB"
+  "xoxb-597700362547-3086009094530-tcXVPQdb3lZ5bVTK5qeb2QwR"
 );
 
 /**
