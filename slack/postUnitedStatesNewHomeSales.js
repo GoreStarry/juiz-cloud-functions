@@ -4,13 +4,13 @@ console.log("Getting started with Node Slack SDK");
 
 const { SLACK_TOKEN, CONVERSATION_ID } = process.env;
 
-const web = new WebClient(SLACK_TOKEN);
-
 exports.postUnitedStatesNewHomeSales = async () => {
+  const web = new WebClient(SLACK_TOKEN);
   // See: https://api.slack.com/methods/chat.postMessage
   const today = new Date();
-  const image_title = `${today.getFullYear()}/${today.getMonth() +
-    1} united states new home sales`;
+  const image_title = `${today.getFullYear()}/${
+    today.getMonth() + 1
+  } united states new home sales`;
   const res = await web.chat
     .postMessage({
       channel: CONVERSATION_ID,
@@ -28,7 +28,7 @@ exports.postUnitedStatesNewHomeSales = async () => {
         },
       ],
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 
