@@ -5,27 +5,26 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://rent.591.com.tw/?kind=1&multiRoom=2,3&section=3,2,5,1,7&searchtype=1&multiPrice=30000_40000,20000_30000&option=naturalgas&showMore=1&multiNotice=not_cover&order=posttime&orderType=desc&area=25,";
+  "https://www.dd-room.com/search?category=house&space=whole&city=%E8%87%BA%E5%8C%97%E5%B8%82&min_rent=30000&max_rent=40000&order=latest&page=1";
 
 const extractLinks = ($) => {
-  return $(".vue-list-rent-item>a") // Select pagination links
+  return $(".w-full a.line-clamp-1") // Select pagination links
     .map((_, a) => {
-      const title = $(a).find(".obsever-lazyimg").attr("alt");
-      const imageUrl = $(a).find(".obsever-lazyimg").attr("src");
+      const title = $(a).text();
 
       // console.log(title);
       return {
-        title: title,
-        // .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
-        // .trim(),
-        url: $(a).attr("href"),
+        title: title
+          .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+          .trim(),
+        url: "https://www.dd-room.com" + $(a).attr("href"),
       };
     }) // Extract the href (url) from each link
     .get(); // Convert cheerio object to array
 };
 
-module.exports = async function crawl591() {
-  const html = await getHtmlPlaywright(url, ".vue-list-rent-item");
+module.exports = async function crawlDD() {
+  const html = await getHtmlPlaywright(url, ".container");
   const $ = cheerio.load(html); // Initialize cheerio
   const houseList = extractLinks($);
 

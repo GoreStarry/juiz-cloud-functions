@@ -5,27 +5,26 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://rent.591.com.tw/?kind=1&multiRoom=2,3&section=3,2,5,1,7&searchtype=1&multiPrice=30000_40000,20000_30000&option=naturalgas&showMore=1&multiNotice=not_cover&order=posttime&orderType=desc&area=25,";
+  "https://rent.housefun.com.tw/region/%E5%8F%B0%E5%8C%97%E5%B8%82_%E5%A4%A7%E5%90%8C%E5%8D%80,%E5%8F%B0%E5%8C%97%E5%B8%82_%E4%B8%AD%E5%B1%B1%E5%8D%80/?cid=0000,0000&aid=2,3&purpid=1&rp_h=40000&rp_l=30000";
 
 const extractLinks = ($) => {
-  return $(".vue-list-rent-item>a") // Select pagination links
+  return $("h3>a.ga_click_trace") // Select pagination links
     .map((_, a) => {
-      const title = $(a).find(".obsever-lazyimg").attr("alt");
-      const imageUrl = $(a).find(".obsever-lazyimg").attr("src");
+      const title = $(a).text();
 
       // console.log(title);
       return {
-        title: title,
-        // .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
-        // .trim(),
-        url: $(a).attr("href"),
+        title: title
+          .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+          .trim(),
+        url: "https://rent.housefun.com.tw" + $(a).attr("href"),
       };
     }) // Extract the href (url) from each link
     .get(); // Convert cheerio object to array
 };
 
-module.exports = async function crawl591() {
-  const html = await getHtmlPlaywright(url, ".vue-list-rent-item");
+module.exports = async function crawlHousefun() {
+  const html = await getHtmlPlaywright(url, ".DataList");
   const $ = cheerio.load(html); // Initialize cheerio
   const houseList = extractLinks($);
 

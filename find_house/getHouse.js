@@ -1,12 +1,15 @@
-import axiosQL from "./axiosQL";
+const axiosQL = require("./axiosQL");
 
-export default async function getHouse({ name }) {
+module.exports = async function getHouse({ isoDate }) {
   const query = /* GraphQL */ `
     query {
-      houses(where: { name: { equalTo: "${name}" } }) {
+      houses(
+        where: { createdAt: { greaterThan: "${isoDate}" } }
+      ) {
         edges {
           node {
             name
+            url
           }
         }
       }
@@ -16,11 +19,9 @@ export default async function getHouse({ name }) {
   const {
     data: {
       data: {
-        houses: {
-          edges: [house],
-        },
+        houses: { edges: houseList },
       },
     },
   } = await axiosQL(query);
-  return house;
-}
+  return houseList.map(({ node: { name, url } }) => ({ name, url }));
+};
