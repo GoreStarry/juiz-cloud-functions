@@ -2,9 +2,9 @@ const { WebClient } = require("@slack/web-api");
 
 console.log("Getting started with Node Slack SDK");
 
-const web = new WebClient(
-  "xoxb-597700362547-3086009094530-1L1gpNyZqA6CMEHtEvN1OLVh"
-);
+const { SLACK_TOKEN } = process.env;
+
+const web = new WebClient(SLACK_TOKEN);
 
 /**
  * Define the chunk method in the prototype of an array
