@@ -1,9 +1,9 @@
 const { WebClient } = require("@slack/web-api");
 
 console.log("Getting started with Node Slack SDK");
-const { SLACK_TOKEN } = process.env;
+
 const web = new WebClient(
-  "xoxb-597700362547-609318930693-i70hFuIprNDRAb4KVz7MivfP"
+  "xoxb-597700362547-3071286135223-e9Z5wHg43CC6nT7vtEJUI7VB"
 );
 
 /**
@@ -29,37 +29,61 @@ Object.defineProperty(Array.prototype, "chunk", {
 // console.log(result);
 
 module.exports = async function sendSlackMessage(list) {
-  const res = await web.chat
+  var d = new Date();
+
+  var datestring =
+    d.getFullYear() +
+    "/" +
+    (d.getMonth() + 1) +
+    "/" +
+    d.getDate() +
+    "-" +
+    d.getHours() +
+    ":" +
+    d.getMinutes();
+
+  return web.chat
     .postMessage({
       channel: "C032C57CFU4",
       // text: `${name} ${url}`,
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: "New request",
-          },
-        },
-        ...list.chunk(10).map((listData) => {
-          return {
-            type: "section",
-            fields: listData.map(({ title, url }) => {
-              return {
-                type: "mrkdwn",
-                text: `${title}  <${url}>`,
-                // type: "plain_text",
-                // text: `${title}: ${url}`,
-              };
-            }),
-          };
-        }),
-      ],
+      blocks:
+        list.length === 0
+          ? [
+              {
+                type: "header",
+                text: {
+                  type: "plain_text",
+                  text: `尚無新房${datestring}`,
+                },
+              },
+            ]
+          : [
+              {
+                type: "header",
+                text: {
+                  type: "plain_text",
+                  text: `${datestring}`,
+                },
+              },
+              ...list.chunk(10).map((listData) => {
+                return {
+                  type: "section",
+                  fields: listData.map(({ title, url }) => {
+                    return {
+                      type: "mrkdwn",
+                      text: `${title}  <${url}>`,
+                      // type: "plain_text",
+                      // text: `${title}: ${url}`,
+                    };
+                  }),
+                };
+              }),
+            ],
     })
     .catch((err) => {
       console.log(err);
     });
 
   // `res` contains information about the posted message
-  console.log("Message sent: ", res.ts);
+  // console.log("Message sent: ", res.ts);
 };

@@ -25,8 +25,8 @@ module.exports = async function houseCrawler() {
       crawlHousefun2(),
     ]);
 
-  console.log(recordedHouse);
-  console.log(recordedHouse.length);
+  // console.log(recordedHouse);
+  // console.log(recordedHouse.length);
 
   const newData = [
     ...list591,
@@ -39,7 +39,7 @@ module.exports = async function houseCrawler() {
 
   console.log(newData);
 
-  sendSlackMessage(newData);
+  await sendSlackMessage(newData);
 
   await Promise.all(
     newData.map(
