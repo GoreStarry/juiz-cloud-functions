@@ -32,15 +32,7 @@ module.exports = async function sendSlackMessage(list) {
   var d = new Date();
 
   var datestring =
-    d.getFullYear() +
-    "/" +
-    (d.getMonth() + 1) +
-    "/" +
-    d.getDate() +
-    "-" +
-    d.getHours() +
-    ":" +
-    d.getMinutes();
+    d.toLocaleDateString("zh-tw") + "-" + d.toLocaleTimeString("zh-tw");
 
   return web.chat
     .postMessage({
