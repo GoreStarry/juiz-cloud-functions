@@ -27,9 +27,13 @@ async function crawlYungching() {
   });
   // console.log(html);
   await page.locator('span[title="台北市"]').click(); // Click triggers navigation.
+  await page.waitForTimeout(1000);
   await page.locator('span[title="中山區"]').click(); // Click triggers navigation.
+  await page.waitForTimeout(1000);
   await page.locator('span[title="20000~40000"]').click(); // Click triggers navigation.
+  await page.waitForTimeout(1000);
   await page.locator("#spnUpdateTimeOrder").click(); // Click triggers navigation.
+  await page.waitForTimeout(1000);
   await page.locator('span[title="整層住家"]').click(); // Click triggers navigation.
   await page.waitForTimeout(5000);
   await page.waitForSelector("#imgLoading", { state: "hidden" });
