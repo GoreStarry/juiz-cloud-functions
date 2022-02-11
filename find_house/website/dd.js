@@ -24,7 +24,7 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlDD() {
-  const html = await getHtmlPlaywright(url, ".container");
+  const { html } = await getHtmlPlaywright(url, ".container");
   const $ = cheerio.load(html); // Initialize cheerio
   const houseList = extractLinks($);
 

@@ -24,9 +24,18 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlHousefun2() {
-  const html = await getHtmlPlaywright(url, ".DataList");
+  const { page, browser } = await getHtmlPlaywright(url, ".DataList", {
+    isUseEnhanceControl: true,
+  });
+  await page.locator('a:has-text("新上架")').click(); // Click triggers navigation.
+  await page.waitForTimeout(800);
+  await page.waitForSelector(".ajax-loading", { state: "hidden" });
+  await page.waitForTimeout(1500);
+  const html = await page.content();
   const $ = cheerio.load(html); // Initialize cheerio
   const houseList = extractLinks($);
+
+  await browser.close();
 
   // console.log(houseList);
   return houseList;

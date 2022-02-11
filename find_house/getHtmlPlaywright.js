@@ -1,7 +1,11 @@
 const { chromium } = require("playwright-core");
 const bundledChromium = require("chrome-aws-lambda");
 
-module.exports = async function getHtmlPlaywright(url, waitForSelector) {
+module.exports = async function getHtmlPlaywright(
+  url,
+  waitForSelector,
+  { isUseEnhanceControl } = {}
+) {
   const browser = await Promise.resolve(bundledChromium.executablePath).then(
     (executablePath) => {
       if (!executablePath) {
@@ -14,10 +18,22 @@ module.exports = async function getHtmlPlaywright(url, waitForSelector) {
   // const browser = await playwright.chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.goto(url);
+  await goTo(page, url);
   await page.waitForSelector(waitForSelector);
-  const html = await page.content();
-  await browser.close();
+  let html;
+  if (!isUseEnhanceControl) {
+    html = await page.content();
+    await browser.close();
+  }
 
-  return html;
+  return { page, browser, html };
 };
+
+async function goTo(page, url) {
+  try {
+    await page.goto(url);
+  } catch (error) {
+    console.log(error);
+    await goTo(page, url);
+  }
+}

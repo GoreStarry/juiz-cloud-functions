@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "SLACK_TOKEN=xoxb-597700362547-3086009094530-cG0FlFmY29XdkqQzlyEIhQBc node ./test.js",
+    "dev": "SLACK_TOKEN=xoxb-597700362547-3086009094530-UZ16SAlWV5PVmc1La8gUShOn node ./test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gore Wang",

@@ -1,4 +1,3 @@
-const axios = require("axios");
 const cheerio = require("cheerio");
 // const playwright = require("playwright");
 
@@ -25,7 +24,7 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawl591() {
-  const html = await getHtmlPlaywright(url, ".vue-list-rent-item");
+  const { html } = await getHtmlPlaywright(url, ".vue-list-rent-item");
   const $ = cheerio.load(html); // Initialize cheerio
   const houseList = extractLinks($);
 

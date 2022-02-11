@@ -1,8 +1,11 @@
 // const sendSlackMessage = require("./sendSlackMessage");
 const crawl591 = require("./website/591");
 const crawlDD = require("./website/dd");
+const crawlSinyi = require("./website/sinyi");
 const crawlHousefun = require("./website/housefun");
 const crawlHousefun2 = require("./website/housefun2");
+const crawlYungching = require("./website/yungching");
+
 const getHouse = require("./getHouse");
 const recordHouse = require("./recordHouse");
 const sendSlackMessage = require("./sendSlackMessage");
@@ -25,6 +28,10 @@ module.exports = async function houseCrawler() {
       crawlHousefun2(),
     ]);
 
+  const [listYungching, listSinyi] = await Promise.all([
+    crawlYungching(),
+    crawlSinyi(),
+  ]);
   // console.log(recordedHouse);
   // console.log(recordedHouse.length);
 
@@ -33,6 +40,8 @@ module.exports = async function houseCrawler() {
     ...listDD,
     ...listHousefun,
     ...listHousefun2,
+    ...listSinyi,
+    ...listYungching,
   ].filter(({ url }) => {
     return !recordedHouse.find(({ url: urlRecord }) => urlRecord === url);
   });
