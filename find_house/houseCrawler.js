@@ -43,7 +43,7 @@ module.exports = async function houseCrawler() {
 
   console.log(newData);
 
-  // await sendSlackMessage(newData);
+  await sendSlackMessage(newData);
 
   await Promise.all(
     newData.map(
