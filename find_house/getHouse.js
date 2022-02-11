@@ -4,6 +4,7 @@ module.exports = async function getHouse({ isoDate }) {
   const query = /* GraphQL */ `
     query {
       houses(
+        first: 1000,
         where: { createdAt: { greaterThan: "${isoDate}" } }
       ) {
         edges {

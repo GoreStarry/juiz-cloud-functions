@@ -16,9 +16,6 @@ module.exports = async function houseCrawler() {
 
   yesterday.setDate(yesterday.getDate() - 1);
 
-  // const recordedHouse = getHouse({
-  //   isoDate: yesterday.toISOString(),
-  // });
   const [recordedHouse, list591, listDD, listHousefun, listHousefun2] =
     await Promise.all([
       getHouse({ isoDate: yesterday.toISOString() }),
@@ -32,23 +29,21 @@ module.exports = async function houseCrawler() {
     crawlYungching(),
     crawlSinyi(),
   ]);
-  // console.log(recordedHouse);
-  // console.log(recordedHouse.length);
 
   const newData = [
     ...list591,
     ...listDD,
     ...listHousefun,
     ...listHousefun2,
-    ...listSinyi,
     ...listYungching,
+    ...listSinyi,
   ].filter(({ url }) => {
     return !recordedHouse.find(({ url: urlRecord }) => urlRecord === url);
   });
 
   console.log(newData);
 
-  await sendSlackMessage(newData);
+  // await sendSlackMessage(newData);
 
   await Promise.all(
     newData.map(
@@ -69,10 +64,4 @@ module.exports = async function houseCrawler() {
   );
 
   console.log("all done");
-
-  // houseCrawler();
-
-  // console.log(recordedHouse);
-  // const list591 = await crawl591();
-  // sendSlackMessage();
 };

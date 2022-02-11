@@ -18,8 +18,8 @@ module.exports = async function getHtmlPlaywright(
   // const browser = await playwright.chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
-  await goTo(page, url);
-  await page.waitForSelector(waitForSelector);
+  await goTo(page, url, waitForSelector);
+
   let html;
   if (!isUseEnhanceControl) {
     html = await page.content();
@@ -29,11 +29,12 @@ module.exports = async function getHtmlPlaywright(
   return { page, browser, html };
 };
 
-async function goTo(page, url) {
+async function goTo(page, url, waitForSelector) {
   try {
     await page.goto(url);
+    await page.waitForSelector(waitForSelector);
   } catch (error) {
     console.log(error);
-    await goTo(page, url);
+    await goTo(page, url, waitForSelector);
   }
 }
