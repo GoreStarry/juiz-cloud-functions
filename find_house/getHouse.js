@@ -5,7 +5,7 @@ module.exports = async function getHouse({ isoDate }) {
     query {
       houses(
         first: 1000,
-        where: { createdAt: { greaterThan: "${isoDate}" } }
+        # where: { createdAt: { greaterThan: "${isoDate}" } }
       ) {
         edges {
           node {
