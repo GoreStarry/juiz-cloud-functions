@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://rent.591.com.tw/?kind=1&multiRoom=2,3&section=3,2,5,1,7&searchtype=1&multiPrice=30000_40000,20000_30000&option=naturalgas&showMore=1&multiNotice=not_cover&order=posttime&orderType=desc&area=25,";
+  "https://rent.591.com.tw/?kind=1&multiRoom=2,3,4&section=3,2,5,1,7&searchtype=1&option=naturalgas&showMore=1&multiNotice=not_cover&order=posttime&orderType=desc&area=28,&rentprice=25000,45000";
 
 const extractLinks = ($) => {
   return $(".vue-list-rent-item>a") // Select pagination links

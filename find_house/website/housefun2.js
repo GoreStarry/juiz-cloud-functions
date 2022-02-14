@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://rent.housefun.com.tw/region/%E5%8F%B0%E5%8C%97%E5%B8%82_%E5%A4%A7%E5%AE%89%E5%8D%80,%E5%8F%B0%E5%8C%97%E5%B8%82_%E4%B8%AD%E6%AD%A3%E5%8D%80,%E5%8F%B0%E5%8C%97%E5%B8%82_%E4%BF%A1%E7%BE%A9%E5%8D%80/?cid=0000,0000,0000&aid=5,1,7&purpid=1&rp_h=40000&rp_l=28000";
+  "https://rent.housefun.com.tw/region/%E5%8F%B0%E5%8C%97%E5%B8%82_%E5%A4%A7%E5%AE%89%E5%8D%80,%E5%8F%B0%E5%8C%97%E5%B8%82_%E4%B8%AD%E6%AD%A3%E5%8D%80,%E5%8F%B0%E5%8C%97%E5%B8%82_%E4%BF%A1%E7%BE%A9%E5%8D%80/?cid=0000,0000,0000&aid=5,1,7&purpid=1&rp_h=45000&rp_l=28000";
 
 const extractLinks = ($) => {
   return $("h3>a.ga_click_trace") // Select pagination links

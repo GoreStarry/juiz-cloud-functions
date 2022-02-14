@@ -26,11 +26,14 @@ async function crawlYungching() {
     isUseEnhanceControl: true,
   });
   // console.log(html);
+
+  await page.fill("#PriceMin", "25000");
+  await page.fill("#PriceMax", "45000");
   await page.locator('span[title="台北市"]').click(); // Click triggers navigation.
   await page.waitForTimeout(1000);
   await page.locator('span[title="中山區"]').click(); // Click triggers navigation.
-  await page.waitForTimeout(1000);
-  await page.locator('span[title="20000~40000"]').click(); // Click triggers navigation.
+  // await page.waitForTimeout(1000);
+  // await page.locator('span[title="20000~40000"]').click(); // Click triggers navigation.
   await page.waitForTimeout(1000);
   await page.locator("#spnUpdateTimeOrder").click(); // Click triggers navigation.
   await page.waitForTimeout(1000);
