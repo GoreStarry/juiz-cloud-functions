@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://www.sinyi.com.tw/rent/list/Taipei-city/100-103-104-106-110-zip/25000-45000-price/28-up-area/house-use/9-tools/1-tags/index.html";
+  "https://www.sinyi.com.tw/rent/list/Taipei-city/100-103-104-106-110-zip/25000-45000-price/25-up-area/house-use/9-tools/1-tags/index.html";
 
 const extractLinks = ($) => {
   return $(".search_result_item>a") // Select pagination links
