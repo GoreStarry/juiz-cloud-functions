@@ -23,6 +23,7 @@ function crawlDD() {
     )
     .catch((err) => {
       console.log(err);
+      return [];
     });
 }
 

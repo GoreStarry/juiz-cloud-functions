@@ -16,13 +16,12 @@ module.exports = async function houseCrawler() {
 
   yesterday.setDate(yesterday.getDate() - 1);
 
-  const [recordedHouse, list591, listDD, listHousefun, listHousefun2] =
-    await Promise.all([
-      getHouse({ isoDate: yesterday.toISOString() }),
-      crawl591(),
-      crawlDD(),
-      crawlHousefun(),
-    ]);
+  const [recordedHouse, list591, listDD, listHousefun] = await Promise.all([
+    getHouse({ isoDate: yesterday.toISOString() }),
+    crawl591(),
+    crawlDD(),
+    crawlHousefun(),
+  ]);
 
   const [listYungching, listSinyi, listCthouse] = await Promise.all([
     crawlYungching(),
