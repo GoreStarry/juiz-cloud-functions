@@ -1,10 +1,8 @@
 // const sendSlackMessage = require("./sendSlackMessage");
 const crawl591 = require("./website/591");
-// const crawlDD = require("./website/dd");
 const crawlDD = require("./website/dd2");
 const crawlSinyi = require("./website/sinyi");
 const crawlHousefun = require("./website/housefun");
-const crawlHousefun2 = require("./website/housefun2");
 const crawlYungching = require("./website/yungching");
 const crawlCthouse = require("./website/cthouse");
 
@@ -24,7 +22,6 @@ module.exports = async function houseCrawler() {
       crawl591(),
       crawlDD(),
       crawlHousefun(),
-      crawlHousefun2(),
     ]);
 
   const [listYungching, listSinyi, listCthouse] = await Promise.all([
@@ -37,7 +34,7 @@ module.exports = async function houseCrawler() {
     ...list591,
     ...listDD,
     ...listHousefun,
-    ...listHousefun2,
+
     ...listYungching,
     ...listSinyi,
     ...listCthouse,

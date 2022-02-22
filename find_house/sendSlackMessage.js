@@ -38,7 +38,7 @@ module.exports = async function sendSlackMessage(list) {
 
   return web.chat
     .postMessage({
-      channel: "C032C57CFU4",
+      channel: "C0342FLEK4J",
       // text: `${name} ${url}`,
       blocks:
         list.length === 0
