@@ -78,6 +78,13 @@ async function crawlYungching() {
   const houseList大同 = extractLinks($大同);
   // console.log(houseList大同);
 
+  await page.locator('span[title="松山區"]').click(); // Click triggers navigation.
+  await page.waitForSelector('.house_block:has-text("松山區")');
+  const html松山 = await page.content();
+  const $松山 = cheerio.load(html松山); // Initialize cheerio
+  const houseList松山 = extractLinks($松山);
+  // console.log(houseList松山);
+
   await browser.close();
 
   return [
@@ -86,6 +93,7 @@ async function crawlYungching() {
     ...houseList大安,
     ...houseList中正,
     ...houseList大同,
+    ...houseList松山,
   ];
 }
 
