@@ -16,13 +16,17 @@ module.exports = async function getHouse({ isoDate }) {
       }
     }
   `;
-
-  const {
-    data: {
+  try {
+    const {
       data: {
-        houses: { edges: houseList },
+        data: {
+          houses: { edges: houseList },
+        },
       },
-    },
-  } = await axiosQL(query);
-  return houseList.map(({ node: { name, url } }) => ({ name, url }));
+    } = await axiosQL(query);
+    return houseList.map(({ node: { name, url } }) => ({ name, url }));
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };

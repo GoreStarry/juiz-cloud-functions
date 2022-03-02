@@ -24,10 +24,10 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlHousefun() {
-  const { page, browser } = await getHtmlPlaywright(url, ".DataList", {
-    isUseEnhanceControl: true,
-  });
   try {
+    const { page, browser } = await getHtmlPlaywright(url, ".DataList", {
+      isUseEnhanceControl: true,
+    });
     await page.locator('a:has-text("新上架")').click(); // Click triggers navigation.
     await page.locator('label:has-text("天然瓦斯")').click(); // Click triggers navigation.
     await page.locator('label:has-text("電梯大樓")').click(); // Click triggers navigation.
@@ -37,17 +37,18 @@ module.exports = async function crawlHousefun() {
     await page.waitForTimeout(800);
     await page.waitForSelector(".ajax-loading", { state: "hidden" });
     await page.waitForTimeout(1500);
+    const html = await page.content();
+    const $ = cheerio.load(html); // Initialize cheerio
+    const houseList = extractLinks($);
+
+    await browser.close();
+    return houseList;
   } catch (error) {
     console.log(error);
+    return [];
   }
-  const html = await page.content();
-  const $ = cheerio.load(html); // Initialize cheerio
-  const houseList = extractLinks($);
-
-  await browser.close();
 
   // console.log(houseList);
-  return houseList;
 };
 
 // axios.get(url).then(async ({ data }) => {

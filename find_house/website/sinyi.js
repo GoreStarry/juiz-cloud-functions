@@ -24,17 +24,23 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlSinyi() {
-  const { page, browser } = await getHtmlPlaywright(url, ".ddhouse", {
-    isUseEnhanceControl: true,
-  });
-  await page.locator(".button_keyword").click(); // Click triggers navigation.
-  await page.waitForSelector("#search_result_loading", { state: "hidden" });
-  await page.waitForTimeout(1000);
-  const html = await page.content();
-  const $ = cheerio.load(html); // Initialize cheerio
-  const houseList = extractLinks($);
-  await browser.close();
+  try {
+    const { page, browser } = await getHtmlPlaywright(url, ".ddhouse", {
+      isUseEnhanceControl: true,
+    });
+
+    await page.locator(".button_keyword").click(); // Click triggers navigation.
+    await page.waitForSelector("#search_result_loading", { state: "hidden" });
+    await page.waitForTimeout(1000);
+    const html = await page.content();
+    const $ = cheerio.load(html); // Initialize cheerio
+    const houseList = extractLinks($);
+    await browser.close();
+    return houseList;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 
   // console.log(houseList);
-  return houseList;
 };

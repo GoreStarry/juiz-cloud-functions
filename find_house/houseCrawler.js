@@ -61,7 +61,10 @@ module.exports = async function houseCrawler() {
           }, index * 500);
         })
     )
-  );
+  ).catch((error) => {
+    console.log(error);
+  });
 
   console.log("all done");
+  return;
 };

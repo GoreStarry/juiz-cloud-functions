@@ -22,10 +22,14 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlDD() {
-  const { html } = await getHtmlPlaywright(url, ".objlist__ItemWrap");
-  const $ = cheerio.load(html); // Initialize cheerio
-  const houseList = extractLinks($);
+  try {
+    const { html } = await getHtmlPlaywright(url, ".objlist__ItemWrap");
+    const $ = cheerio.load(html); // Initialize cheerio
+    const houseList = extractLinks($);
 
-  // console.log(houseList);
-  return houseList;
+    // console.log(houseList);
+    return houseList;
+  } catch (error) {
+    console.log(error);
+  }
 };

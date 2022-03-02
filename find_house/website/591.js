@@ -24,12 +24,17 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawl591() {
-  const { html } = await getHtmlPlaywright(url, ".vue-list-rent-item");
-  const $ = cheerio.load(html); // Initialize cheerio
-  const houseList = extractLinks($);
+  try {
+    const { html } = await getHtmlPlaywright(url, ".vue-list-rent-item");
+    const $ = cheerio.load(html); // Initialize cheerio
+    const houseList = extractLinks($);
 
-  // console.log(houseList);
-  return houseList;
+    // console.log(houseList);
+    return houseList;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 // axios.get(url).then(async ({ data }) => {
