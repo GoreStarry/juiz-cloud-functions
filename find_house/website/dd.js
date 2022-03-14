@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const getHtmlPlaywright = require("../getHtmlPlaywright");
 
 const url =
-  "https://www.dd-room.com/search?category=house&space=whole&city=%E8%87%BA%E5%8C%97%E5%B8%82&min_rent=25000&max_rent=45000&order=latest&page=1";
+  "https://www.dd-room.com/search?category=house&space=whole&city=%E8%87%BA%E5%8C%97%E5%B8%82&min_rent=25000&max_rent=41000&order=latest&page=1";
 
 const extractLinks = ($) => {
   return $(".w-full a.line-clamp-1") // Select pagination links
@@ -24,12 +24,16 @@ const extractLinks = ($) => {
 };
 
 module.exports = async function crawlDD() {
-  const { html } = await getHtmlPlaywright(url, ".container");
-  const $ = cheerio.load(html); // Initialize cheerio
-  const houseList = extractLinks($);
+  try {
+    const { html } = await getHtmlPlaywright(url, ".container");
+    const $ = cheerio.load(html); // Initialize cheerio
+    const houseList = extractLinks($);
 
-  // console.log(houseList);
-  return houseList;
+    // console.log(houseList);
+    return houseList;
+  } catch (error) {
+    return [];
+  }
 };
 
 // axios.get(url).then(async ({ data }) => {
