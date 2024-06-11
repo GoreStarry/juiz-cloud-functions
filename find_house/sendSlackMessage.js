@@ -13,14 +13,11 @@ const web = new WebClient(SLACK_TOKEN);
  * @param chunkSize {Integer} Size of every group
  */
 Object.defineProperty(Array.prototype, "chunk", {
-  value: function (chunkSize) {
-    var that = this;
-    return Array(Math.ceil(that.length / chunkSize))
-      .fill()
-      .map(function (_, i) {
-        return that.slice(i * chunkSize, i * chunkSize + chunkSize);
-      });
-  },
+	value: function (chunkSize) {
+		return Array(Math.ceil(this.length / chunkSize))
+			.fill()
+			.map((_, i) => this.slice(i * chunkSize, i * chunkSize + chunkSize));
+	},
 });
 
 // Split in group of 3 items
@@ -29,55 +26,56 @@ Object.defineProperty(Array.prototype, "chunk", {
 // console.log(result);
 
 module.exports = async function sendSlackMessage(list) {
-  var d = new Date();
+	var d = new Date();
 
-  var datestring =
-    d.toLocaleDateString("zh-tw", { timeZone: "Asia/Taipei" }) +
-    "-" +
-    d.toLocaleTimeString("zh-tw", { timeZone: "Asia/Taipei" });
+	var datestring =
+		d.toLocaleDateString("zh-tw", { timeZone: "Asia/Taipei" }) +
+		"-" +
+		d.toLocaleTimeString("zh-tw", { timeZone: "Asia/Taipei" });
 
-  return web.chat
-    .postMessage({
-      channel: "C032C57CFU4",
-      // text: `${name} ${url}`,
-      blocks:
-        list.length === 0
-          ? [
-              {
-                type: "header",
-                text: {
-                  type: "plain_text",
-                  text: `尚無新房${datestring}`,
-                },
-              },
-            ]
-          : [
-              {
-                type: "header",
-                text: {
-                  type: "plain_text",
-                  text: `${datestring}`,
-                },
-              },
-              ...list.chunk(10).map((listData) => {
-                return {
-                  type: "section",
-                  fields: listData.map(({ title, url }) => {
-                    return {
-                      type: "mrkdwn",
-                      text: `${title}  <${url}>`,
-                      // type: "plain_text",
-                      // text: `${title}: ${url}`,
-                    };
-                  }),
-                };
-              }),
-            ],
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+	return web.chat
+		.postMessage({
+			// channel: "C032C57CFU4",
+			channel: "C017ESNMPDY",
+			// text: `${name} ${url}`,
+			blocks:
+				list.length === 0
+					? [
+							{
+								type: "header",
+								text: {
+									type: "plain_text",
+									text: `尚無新房${datestring}`,
+								},
+							},
+						]
+					: [
+							{
+								type: "header",
+								text: {
+									type: "plain_text",
+									text: `${datestring}`,
+								},
+							},
+							...list.chunk(10).map((listData) => {
+								return {
+									type: "section",
+									fields: listData.map(({ title, url }) => {
+										return {
+											type: "mrkdwn",
+											text: `${title}  <https:${url}>`,
+											// type: "plain_text",
+											// text: `${title}: ${url}`,
+										};
+									}),
+								};
+							}),
+						],
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 
-  // `res` contains information about the posted message
-  // console.log("Message sent: ", res.ts);
+	// `res` contains information about the posted message
+	// console.log("Message sent: ", res.ts);
 };

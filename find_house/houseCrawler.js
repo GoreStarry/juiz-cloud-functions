@@ -1,71 +1,74 @@
 // const sendSlackMessage = require("./sendSlackMessage");
 const crawl591 = require("./website/591");
 // const crawlDD = require("./website/dd");
-const crawlDD = require("./website/dd2");
-const crawlSinyi = require("./website/sinyi");
-const crawlHousefun = require("./website/housefun");
-const crawlHousefun2 = require("./website/housefun2");
-const crawlYungching = require("./website/yungching");
-const crawlCthouse = require("./website/cthouse");
+// const crawlDD = require("./website/dd2");
+// const crawlSinyi = require("./website/sinyi");
+// const crawlHousefun = require("./website/housefun");
+// const crawlHousefun2 = require("./website/housefun2");
+// const crawlYungching = require("./website/yungching");
+// const crawlCthouse = require("./website/cthouse");
 
 const getHouse = require("./getHouse");
 const recordHouse = require("./recordHouse");
 const sendSlackMessage = require("./sendSlackMessage");
 
 module.exports = async function houseCrawler() {
-  const today = new Date();
-  const yesterday = new Date(today);
+	const today = new Date();
+	const yesterday = new Date(today);
 
-  yesterday.setDate(yesterday.getDate() - 1);
+	yesterday.setDate(yesterday.getDate() - 1);
 
-  const [recordedHouse, list591, listDD, listHousefun, listHousefun2] =
-    await Promise.all([
-      getHouse({ isoDate: yesterday.toISOString() }),
-      crawl591(),
-      crawlDD(),
-      crawlHousefun(),
-      crawlHousefun2(),
-    ]);
+	const [recordedHouse, list591, listDD, listHousefun, listHousefun2] =
+		await Promise.all([
+			getHouse({ isoDate: yesterday.toISOString() }),
+			crawl591(),
+			// crawlDD(),
+			// crawlHousefun(),
+			// crawlHousefun2(),
+		]);
 
-  const [listYungching, listSinyi, listCthouse] = await Promise.all([
-    crawlYungching(),
-    crawlSinyi(),
-    crawlCthouse(),
-  ]);
+	// const [listYungching, listSinyi, listCthouse] = await Promise.all([
+	// 	crawlYungching(),
+	// 	// crawlSinyi(),
+	// 	crawlCthouse(),
+	// ]);
 
-  const newData = [
-    ...list591,
-    ...listDD,
-    ...listHousefun,
-    ...listHousefun2,
-    ...listYungching,
-    ...listSinyi,
-    ...listCthouse,
-  ].filter(({ url }) => {
-    return !recordedHouse.find(({ url: urlRecord }) => urlRecord === url);
-  });
+	console.log(list591);
 
-  console.log(newData);
+	const newData = [
+		...list591,
+		// ...listDD,
+		// ...listHousefun,
+		// ...listHousefun2,
+		// ...listYungching,
+		// ...listSinyi,
+		// ...listCthouse,
+	].filter(({ url }) => {
+		console.log(url);
+		return !recordedHouse.find(({ url: urlRecord }) => urlRecord === url);
+	});
 
-  await sendSlackMessage(newData);
+	console.log(newData);
 
-  await Promise.all(
-    newData.map(
-      ({ title, url }, index) =>
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            recordHouse({ name: title, url })
-              .then((res) => {
-                console.log(`recorded: ${title}`);
-                resolve(res);
-              })
-              .catch((error) => {
-                reject(error);
-              });
-          }, index * 500);
-        })
-    )
-  );
+	await sendSlackMessage(newData);
 
-  console.log("all done");
+	await Promise.all(
+		newData.map(
+			({ title, url }, index) =>
+				new Promise((resolve, reject) => {
+					setTimeout(() => {
+						recordHouse({ name: title, url })
+							.then((res) => {
+								console.log(`recorded: ${title}`);
+								resolve(res);
+							})
+							.catch((error) => {
+								reject(error);
+							});
+					}, index * 500);
+				}),
+		),
+	);
+
+	console.log("all done");
 };
