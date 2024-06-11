@@ -33,6 +33,9 @@ module.exports = async function sendSlackMessage(list) {
 		"-" +
 		d.toLocaleTimeString("zh-tw", { timeZone: "Asia/Taipei" });
 
+	//
+	if (list.length === 0) return;
+
 	return web.chat
 		.postMessage({
 			// channel: "C032C57CFU4",
